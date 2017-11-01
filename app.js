@@ -29,26 +29,24 @@ var counter = 0;
 var firstId = 0;
 var secondId = 0;
 
+checkMatch(){
+	$('.card').click(function (e) {
+	  $(this).toggleClass('show');
+	});
+}
 for (counter = 0; counter < 2; counter++){
 	counter = counter + 1;
 	if(counter == 1){
-		checkMatch(){
-			$('.card').click(function (e) {
-			  $(this).toggleClass('show');
-			});
+		checkMatch();
 		firstId = getElementById;
 	}
 	if(counter == 2){
-		checkMatch(){
-			$('.card').click(function (e) {
-			  $(this).toggleClass('show');
-			});
+		checkMatch();
 		secondId = getElementById;
 	}
 	if (firstId == secondId){
 		$(firstId).addClass('match');
 		$(secondId).addClass('match');
-	}
 	}
 }		
 
