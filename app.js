@@ -49,7 +49,8 @@ for (counter = 0; counter < 2; counter++){
 		$(firstId).addClass('match');
 		$(secondId).addClass('match');
 	}
-}
+	}
+}		
 
 /*
  * set up the event listener for a card. If a card is clicked:
