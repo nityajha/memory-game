@@ -29,7 +29,7 @@ var counter = 0;
 var firstId = 0;
 var secondId = 0;
 
-checkMatch(forcard){
+function checkMatch(forcard){
 	$('.card').click(function (e) {
 	  $(this).toggleClass('show');
 	});
