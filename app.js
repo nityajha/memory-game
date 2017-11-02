@@ -24,31 +24,52 @@ function shuffle(array) {
 
     return array;
 }
- 
+
+var array = ["#1", "#2", "#3", "#4", "#5", "#6", "#7", "#8"];
+var clicked_cards = [];
 var counter = 0;
+var moves = 0;
+var clicked_card_id = 0;
 var firstId = 0;
 var secondId = 0;
 
-function checkMatch(forcard){
+function clicked(this){
 	$('.card').click(function (e) {
 	  $(this).toggleClass('show');
 	});
+	store_id(this);
+	moves = moves + 1;
 }
-for (counter = 0; counter < 2; counter++){
-	counter = counter + 1;
-	if(counter == 1){
-		checkMatch();
-		firstId = getElementById;
+
+function store_id(this){
+	first_id = ;
+}
+
+function store_in_array(first_id){
+	for(counter = 0; counter<2; counter++){
+		clicked_cards.push(first_id);
 	}
-	if(counter == 2){
-		checkMatch();
-		secondId = getElementById;
+}
+
+function check(){
+	if (clicked_cards[0] == clicked_cards[1]){
+		clicked_cards[0].addClass('match');
+		clicked_cards[1].addClass('match');
+		pairs = pairs + 1;
+		check_win();
+	}else{
+		clicked_cards[0].removeClass('show');
+		clicked_cards[1].removeClass('show');
+		clicked_cards.pop();
+		clicked_cards.pop();
 	}
-	if (firstId == secondId){
-		$(firstId).addClass('match');
-		$(secondId).addClass('match');
+}
+
+check_win(pairs){
+	if (pairs === 8){
+		declare winner;
 	}
-}		
+}
 
 /*
  * set up the event listener for a card. If a card is clicked:
