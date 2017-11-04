@@ -25,7 +25,7 @@ function shuffle(array) {
     return array;
 }
 
-var card_array = ["#1", "#2", "#3", "#4", "#5", "#6", "#7", "#8"];
+var card_array = [".fa fa-diamond", ".fa fa-paper-plane", ".fa fa-anchor", ".fa fa-bolt", ".fa fa-cube", ".fa fa-leaf", ".fa fa-bicycle", ".fa fa-bomb"];
 var clicked_cards = [];
 var counter = 0;
 var moves = 0;
