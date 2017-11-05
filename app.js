@@ -2,6 +2,13 @@
  * Create a list that holds all of your cards
  */
 
+var card_array = [".fa fa-diamond", ".fa fa-paper-plane", ".fa fa-anchor", ".fa fa-bolt", ".fa fa-cube", ".fa fa-leaf", ".fa fa-bicycle", ".fa fa-bomb"];
+var cards = ["fa-diamond", "fa-diamond", "fa-paper-plane", "fa-paper-plane", "fa-anchor", "fa-anchor", "fa-bolt", "fa-bolt", "fa-cube", "fa-cube", "fa-leaf", "fa-leaf", "fa-bicycle", "fa-bicycle", "fa-bomb", "fa-bomb"];
+var clicked_cards = [];
+var counter = 0;
+var moves = 0;
+var clicked_card_id = 0;
+var score = 0;
 
 /*
  * Display the cards on the page
@@ -25,43 +32,67 @@ function shuffle(array) {
     return array;
 }
 
-var card_array = [".fa fa-diamond", ".fa fa-paper-plane", ".fa fa-anchor", ".fa fa-bolt", ".fa fa-cube", ".fa fa-leaf", ".fa fa-bicycle", ".fa fa-bomb"];
-var clicked_cards = [];
-var counter = 0;
-var moves = 0;
-var clicked_card_id = 0;
-var firstId = 0;
-var secondId = 0;
-var score = 0;
+ //shuffle the list of cards using the provided "shuffle" method below
 
-function clicked(this){
+
+// - loop through each card and create its HTML
+// - add each card's HTML to the page
+
+
+//<li class="card" id ="1" onclick = "clicked(this)">
+//                <i class="fa fa-diamond"></i>
+//            </li>
+    
+
+function makeDeck() {
+	cards = shuffle(cards);
+	$('.deck').empty();
+	cards.forEach(function(card, index) {
+		//console.log(card)
+		var cardElem = '<li class="card" id="' + index + '"><i class="fa ' + card +'"></i></li>';
+
+		//console.log(cardElem)
+		$('.deck').append(cardElem);
+	});
+}
+
+makeDeck();
+
+
+//function clicked(this){
+function clicked(){
 	$('.card').click(function (e) {
 	  $(this).toggleClass('show');
 	});
 	moves = moves + 1;
 }
 
+
+clicked();
+
 function store_id(){
-	first_id = $(this).attr("id") ;
+	clicked_card_id = $('.card).attr("id") ;
 }
 
-function store_in_array(first_id){
+function store_in_array(clicked_card_id){
 	for(counter = 0; counter<2; counter++){
-		clicked_cards.push(first_id);
+		clicked_cards.push(clicked_card_id);
 	}
 }
 
 function check(){
-	if (clicked_cards[0] == clicked_cards[1]){
-		clicked_cards[0].addClass('match');
-		clicked_cards[1].addClass('match');
-		score = score + 5;
-		pairs = pairs + 1;
-		check_win();
-	}else{
-		clicked_cards.pop();
-		clicked_cards.pop();
-		score = score - 1;
+	if(clicked_cards().length === 2){
+		if (clicked_cards[0] === clicked_cards[1]){
+			clicked_cards[0].addClass('match');
+			clicked_cards[1].addClass('match');
+			score = score + 5;
+			pairs = pairs + 1;
+			check_win();
+		}else{
+			clicked_cards.pop();
+			clicked_cards.pop();
+			score = score - 1;
+		}
 	}
 }
 
@@ -70,7 +101,7 @@ function check_win(pairs){
 		alert("You have won the game with" +moves+" moves. Press restart symbol to play again.");
 	}
 }
-function reset_game(game){
+function reset_game(){
 	pairs = 0;
 	clicked_cards = [];
 	moves = 0;
@@ -79,7 +110,7 @@ function reset_game(game){
 	firstId = 0;
 	secondId = 0;
 	shuffle(card_array);
-};
+}
 	
 
 /*function check(){
