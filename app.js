@@ -2,13 +2,13 @@
  * Create a list that holds all of your cards
  */
 
-var card_array = [".fa fa-diamond", ".fa fa-paper-plane", ".fa fa-anchor", ".fa fa-bolt", ".fa fa-cube", ".fa fa-leaf", ".fa fa-bicycle", ".fa fa-bomb"];
 var cards = ["fa-diamond", "fa-diamond", "fa-paper-plane", "fa-paper-plane", "fa-anchor", "fa-anchor", "fa-bolt", "fa-bolt", "fa-cube", "fa-cube", "fa-leaf", "fa-leaf", "fa-bicycle", "fa-bicycle", "fa-bomb", "fa-bomb"];
 var clicked_cards = [];
 var counter = 0;
 var moves = 0;
 var clicked_card_id = 0;
 var score = 0;
+var pairs = 0;
 
 /*
  * Display the cards on the page
@@ -58,43 +58,43 @@ function makeDeck() {
 
 makeDeck();
 
-
-//function clicked(this){
 function clicked(){
 	$('.card').click(function (e) {
 	  $(this).toggleClass('show');
 	});
 	moves = moves + 1;
+	clicked_card_id = this.id;
+	//store_in_array(clicked_card_id);
 }
-
-
 clicked();
 
-function store_id(){
-	clicked_card_id = $('.card).attr("id") ;
-}
+$("span").prepend(moves);
 
 function store_in_array(clicked_card_id){
 	for(counter = 0; counter<2; counter++){
 		clicked_cards.push(clicked_card_id);
 	}
+	if(clicked_cards.length === 2){
+		check();
+	}
 }
 
 function check(){
-	if(clicked_cards().length === 2){
-		if (clicked_cards[0] === clicked_cards[1]){
-			clicked_cards[0].addClass('match');
-			clicked_cards[1].addClass('match');
-			score = score + 5;
-			pairs = pairs + 1;
-			check_win();
-		}else{
-			clicked_cards.pop();
-			clicked_cards.pop();
-			score = score - 1;
+	if (clicked_cards[0] === clicked_cards[1]){
+		for(var j=0; j<2; j++){
+			var matched_card = clicked_cards[j];
+			$("li").addClass("match");
 		}
+		score = score + 5;
+		pairs = pairs + 1;
+		check_win();
+	}else{
+		clicked_cards.pop();
+		clicked_cards.pop();
+		score = score - 1;
 	}
 }
+
 
 function check_win(pairs){
 	if (pairs === 8){
@@ -109,9 +109,8 @@ function reset_game(){
 	score = 0;
 	firstId = 0;
 	secondId = 0;
-	shuffle(card_array);
-}
-	
+	shuffle(cards);
+}	
 
 /*function check(){
 	for (counter = 0; counter < 2; counter++){
