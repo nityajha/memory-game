@@ -58,15 +58,13 @@ function makeDeck() {
 
 makeDeck();
 
-function clicked(){
-	$('.card').click(function (e) {
-	  $(this).toggleClass('show');
-	});
+$('.card').click(function (e) {
+	$(this).toggleClass('show');
 	moves = moves + 1;
-	clicked_card_id = this.id;
+	clicked_card_id = e.target.id;
 	//store_in_array(clicked_card_id);
-}
-clicked();
+});
+
 
 $("span").prepend(moves);
 
@@ -75,6 +73,7 @@ function store_in_array(clicked_card_id){
 		clicked_cards.push(clicked_card_id);
 	}
 	if(clicked_cards.length === 2){
+		console.log("it is going to check");
 		check();
 	}
 }
