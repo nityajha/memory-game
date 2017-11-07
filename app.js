@@ -58,13 +58,14 @@ function makeDeck() {
 
 makeDeck();
 
-$('.card').click(function (e) {
-	$(this).toggleClass('show');
-	moves = moves + 1;
-	clicked_card_id = e.target.id;
-	//store_in_array(clicked_card_id);
-});
 
+$('.card').click(function (e) { 
+	$(this).toggleClass('show'); 
+	console.log(e.target.id);
+	moves = moves + 1; 
+	clicked_card_id = e.target.id; 
+	store_in_array(clicked_card_id); 
+});
 
 $("span").prepend(moves);
 
@@ -88,9 +89,14 @@ function check(){
 		pairs = pairs + 1;
 		check_win();
 	}else{
+		for (var j = 0; j<2; j++){
+			var unmatched_card = clicke_cards[j];
+			$("li").removeClass("show");
+		}
 		clicked_cards.pop();
 		clicked_cards.pop();
 		score = score - 1;
+		
 	}
 }
 
@@ -109,8 +115,7 @@ function reset_game(){
 	firstId = 0;
 	secondId = 0;
 	shuffle(cards);
-}	
-
+}
 /*function check(){
 	for (counter = 0; counter < 2; counter++){
 		counter = counter + 1;
