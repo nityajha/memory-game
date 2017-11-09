@@ -9,7 +9,7 @@ var moves = 0;
 var clicked_card_id = 0;
 var score = 0;
 var pairs = 0;
-
+ 
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -60,22 +60,26 @@ makeDeck();
 
 
 $('.card').click(function (e) { 
-	$(this).toggleClass('show'); 
+	$(this).toggleClass('show');
+	let k=e.target.id; 
 	console.log(e.target.id);
 	moves = moves + 1; 
 	clicked_card_id = e.target.id; 
-	store_in_array(clicked_card_id); 
+	store_in_array(clicked_card_id);
+	
 });
+
 
 $("span").prepend(moves);
 
 function store_in_array(clicked_card_id){
-	for(counter = 0; counter<2; counter++){
+	for(counter = 1; counter<2; counter++){
 		clicked_cards.push(clicked_card_id);
 	}
 	if(clicked_cards.length === 2){
-		console.log("it is going to check");
 		check();
+		console.log("it is going to check");
+		
 	}
 }
 
@@ -90,15 +94,17 @@ function check(){
 		check_win();
 	}else{
 		for (var j = 0; j<2; j++){
-			var unmatched_card = clicke_cards[j];
-			$("li").removeClass("show");
+			var unmatched_card = clicked_cards[j];
+			$("li").toggleClass("show");
 		}
 		clicked_cards.pop();
 		clicked_cards.pop();
 		score = score - 1;
 		
 	}
+	
 }
+
 
 
 function check_win(pairs){
