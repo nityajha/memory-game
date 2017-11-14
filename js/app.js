@@ -88,7 +88,7 @@ function check(){
 	if (clicked_cards[0] === clicked_cards[1]){
 		for(var j=0; j<2; j++){
 			var matched_card = clicked_cards[j];
-			
+			$("li").addClass("match");
 			
 		}
 		score = score + 5;
