@@ -61,10 +61,11 @@ makeDeck();
 
 $('.card').click(function (e) { 
 	$(this).toggleClass('show');
-	let k=e.target.id; 
-	console.log(e.target.id);
+	//let k=e.target.id; 
+	console.log(e.target.innerHTML);
 	moves = moves + 1; 
-	clicked_card_id = e.target.id; 
+	document.getElementById("moves").innerHTML = moves;
+	clicked_card_id = e.target.innerHTML; 
 	store_in_array(clicked_card_id);
 	
 });
@@ -76,7 +77,7 @@ function store_in_array(clicked_card_id){
 	for(counter = 1; counter<2; counter++){
 		clicked_cards.push(clicked_card_id);
 	}
-	if(clicked_cards.length === 2){
+	if(clicked_cards.length ==  2){
 		check();
 		console.log("it is going to check");
 		
@@ -87,11 +88,16 @@ function check(){
 	if (clicked_cards[0] === clicked_cards[1]){
 		for(var j=0; j<2; j++){
 			var matched_card = clicked_cards[j];
-			$("li").addClass("match");
+			
+			
 		}
 		score = score + 5;
+		document.getElementById("score").innerHTML=score
+		document.getElementById("moves").innerHTML = moves;
 		pairs = pairs + 1;
 		check_win();
+		clicked_cards.pop();
+		clicked_cards.pop();
 	}else{
 		for (var j = 0; j<2; j++){
 			var unmatched_card = clicked_cards[j];
@@ -100,6 +106,8 @@ function check(){
 		clicked_cards.pop();
 		clicked_cards.pop();
 		score = score - 1;
+		document.getElementById("score").innerHTML=score
+		
 		
 	}
 	
@@ -113,6 +121,7 @@ function check_win(pairs){
 	}
 }
 function reset_game(){
+	
 	pairs = 0;
 	clicked_cards = [];
 	moves = 0;
@@ -121,4 +130,5 @@ function reset_game(){
 	firstId = 0;
 	secondId = 0;
 	shuffle(cards);
+	location.reload();
 }
