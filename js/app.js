@@ -39,11 +39,6 @@ function shuffle(array) {
 // - add each card's HTML to the page
 
 
-//<li class="card" id ="1" onclick = "clicked(this)">
-//                <i class="fa fa-diamond"></i>
-//            </li>
-    
-
 function makeDeck() {
 	cards = shuffle(cards);
 	$('.deck').empty();
@@ -59,25 +54,27 @@ function makeDeck() {
 makeDeck();
 
 
-$('.card').click(function (e) { 
-	$(this).toggleClass('show');
+$('.card').click(function (e) {
+
+	const $clickedCard = $(this);
+	$clickedCard.toggleClass('show');
 	//let k=e.target.id; 
-	console.log(e.target.innerHTML);
+	//console.log(e.target.innerHTML);
 	moves = moves + 1; 
 	document.getElementById("moves").innerHTML = moves;
-	clicked_card_id = e.target.innerHTML; 
-	store_in_array(clicked_card_id);
+	//clicked_card_id = e.target.innerHTML; 
+	store_in_array($clickedCard);
 	
 });
 
 
 $("span").prepend(moves);
 
-function store_in_array(clicked_card_id){
-	for(counter = 1; counter<2; counter++){
-		clicked_cards.push(clicked_card_id);
-	}
-	if(clicked_cards.length ==  2){
+function store_in_array($clickedCard){
+
+	clicked_cards.push($clickedCard);
+
+	if(clicked_cards.length ===  2){
 		check();
 		console.log("it is going to check");
 		
@@ -85,12 +82,19 @@ function store_in_array(clicked_card_id){
 }
 
 function check(){
-	if (clicked_cards[0] === clicked_cards[1]){
+	const firstCard = clicked_cards[0].children().attr("class")
+	const secondCard = clicked_cards[1].children().attr("class")
+
+	console.log(firstCard, secondCard, firstCard === secondCard)
+
+
+
+	if (firstCard === secondCard){
 		for(var j=0; j<2; j++){
-			var matched_card = clicked_cards[j];
-			$("li").addClass("match");
-			
+			var $matched_card = clicked_cards[j];
+			$matched_card.addClass("match")
 		}
+		clicked_cards = []
 		score = score + 5;
 		document.getElementById("score").innerHTML=score
 		document.getElementById("moves").innerHTML = moves;
@@ -100,11 +104,10 @@ function check(){
 		clicked_cards.pop();
 	}else{
 		for (var j = 0; j<2; j++){
-			var unmatched_card = clicked_cards[j];
-			$("li").toggleClass("show");
+			var $unmatched_card = clicked_cards[j];
+			$unmatched_card.removeClass("open show")
 		}
-		clicked_cards.pop();
-		clicked_cards.pop();
+		clicked_cards = []
 		score = score - 1;
 		document.getElementById("score").innerHTML=score
 		
@@ -112,7 +115,6 @@ function check(){
 	}
 	
 }
-
 
 
 function check_win(pairs){
