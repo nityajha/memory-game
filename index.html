@@ -27,11 +27,16 @@
         </header>
 
         <section class="score-panel">
+	<ul class = "stars">
+		<li id = "one"><i class = "fa fa-star"></i></li>
+		<li id = "two"><i class = "fa fa-star"></i></li>
+		<li id = "three"><i class = "fa fa-star"></i></li>
+	</ul><br/>
         	
-            <label>Scores: </label><p id="score"><strong>0</strong></p>
+            <label>Scores: </label><span id="score"><strong></strong></span><br/>
 
-        	<span id="moves">Moves</span> 
-
+        	<label>Moves: </label><span id="moves"><strong></strong></span> <br/>
+	<label>Time: </label><span id = "minutes"></span>:<span id = "seconds"></span>
             
             <div class="restart" onclick = "reset_game(this)">
         		<i class="fa fa-repeat"></i>
