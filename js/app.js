@@ -95,7 +95,7 @@ function check(){
 		document.getElementById("score").innerHTML=score;
 		document.getElementById("moves").innerHTML = moves;
 		pairs = pairs + 1;
-		check_win();
+		check_win(pairs);
 		clicked_cards.pop();
 		clicked_cards.pop();
 	}else{
@@ -116,7 +116,8 @@ function check(){
 
 function check_win(pairs){
 	if (pairs === 8){
-		alert("You have won the game with" +moves+" moves in "+minutes+" minutes and"+seconds+" seconds. Press restart symbol to play again.");
+		console.log("win");
+		window.alert("You have won the game with" +moves+" moves in "+minutes+" minutes and"+seconds+" seconds. Press restart symbol to play again.");
 	}
 	clearInterval(timer);
 }
