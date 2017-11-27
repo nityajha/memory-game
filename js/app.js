@@ -55,16 +55,14 @@ makeDeck();
 
 
 $('.card').click(function (e) {
-
 	const $clickedCard = $(this);
-	$clickedCard.toggleClass('show');
+	$clickedCard.toggleClass('open show');
 	//let k=e.target.id; 
 	//console.log(e.target.innerHTML);
 	moves = moves + 1; 
 	document.getElementById("moves").innerHTML = moves;
 	//clicked_card_id = e.target.innerHTML; 
 	store_in_array($clickedCard);
-	
 });
 
 
@@ -82,21 +80,19 @@ function store_in_array($clickedCard){
 }
 
 function check(){
-	const firstCard = clicked_cards[0].children().attr("class")
-	const secondCard = clicked_cards[1].children().attr("class")
+	const firstCard = clicked_cards[0].children().attr("class");
+	const secondCard = clicked_cards[1].children().attr("class");
 
-	console.log(firstCard, secondCard, firstCard === secondCard)
-
-
+	console.log(firstCard, secondCard, firstCard === secondCard);
 
 	if (firstCard === secondCard){
 		for(var j=0; j<2; j++){
 			var $matched_card = clicked_cards[j];
-			$matched_card.addClass("match")
+			$matched_card.addClass("match");
 		}
-		clicked_cards = []
+		clicked_cards = [];
 		score = score + 5;
-		document.getElementById("score").innerHTML=score
+		document.getElementById("score").innerHTML=score;
 		document.getElementById("moves").innerHTML = moves;
 		pairs = pairs + 1;
 		check_win();
@@ -105,11 +101,12 @@ function check(){
 	}else{
 		for (var j = 0; j<2; j++){
 			var $unmatched_card = clicked_cards[j];
-			$unmatched_card.removeClass("open show")
+			$unmatched_card.addClass("wrong");
+			$unmatched_card.removeClass("open show");
 		}
-		clicked_cards = []
+		clicked_cards = [];
 		score = score - 1;
-		document.getElementById("score").innerHTML=score
+		document.getElementById("score").innerHTML=score;
 		
 		
 	}
@@ -119,8 +116,25 @@ function check(){
 
 function check_win(pairs){
 	if (pairs === 8){
-		alert("You have won the game with" +moves+" moves. Press restart symbol to play again.");
+		alert("You have won the game with" +moves+" moves in "+minutes+" minutes and"+seconds+" seconds. Press restart symbol to play again.");
 	}
+	clearInterval(timer);
+}
+
+function star_rating(moves){
+	var $node_one = $('<li id ="one"><i class = "fa fa-star"></i></li>');
+	var $node_two = $('<li id ="two"><i class = "fa fa-star"></i></li>');
+	var $node_three = $('<li id ="three"><i class = "fa fa-star"></i></li>');
+	if(moves>16 && moves<22){
+		$node_one.removeClass('fa-star').addClass('fa-star-o');
+		$node_two.removeClass('fa-star').addClass('fa-star-o');
+		$node_three.removeClass('fa-star').addClass('fa-star-o');		
+	}else if(moves>22 && moves<32){
+		$node_one.removeClass('fa-star').addClass('fa-star-o');
+		$node_two.removeClass('fa-star').addClass('fa-star-o');
+	}else if(moves>32){
+		$node_one.removeClass('fa-star').addClass('fa-star-o');
+	}		
 }
 function reset_game(){
 	
@@ -134,3 +148,14 @@ function reset_game(){
 	shuffle(cards);
 	location.reload();
 }
+
+//timer function from https://stackoverflow.com/questions/5517597/plain-count-up-timer-in-javascript
+var sec = 0;
+function pad (val){ 
+	return val > 9 ? val : "0" + val;
+}
+var timer = setInterval (function(){
+	var seconds = document.getElementById("seconds").innerHTML = pad(++sec%60);
+	var minutes = document.getElementById("minutes").innerHTML = pad(parseInt(sec/60, 10));
+}, 1000);
+	
