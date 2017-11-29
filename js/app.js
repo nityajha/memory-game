@@ -73,9 +73,9 @@ function store_in_array($clickedCard){
 	clicked_cards.push($clickedCard);
 
 	if(clicked_cards.length ===  2){
-		check();
-		console.log("it is going to check");
-		
+		setTimeout(function(){
+			check();},1000);
+			console.log("it is going to check");
 	}
 }
 
@@ -85,41 +85,39 @@ function check(){
 
 	console.log(firstCard, secondCard, firstCard === secondCard);
 
-	if (firstCard === secondCard){
-		for(var j=0; j<2; j++){
-			var $matched_card = clicked_cards[j];
-			$matched_card.addClass("match");
+		if (firstCard === secondCard){
+			for(var j=0; j<2; j++){
+				var $matched_card = clicked_cards[j];
+				$matched_card.addClass("match");
+			}
+			clicked_cards = [];
+			score = score + 5;
+			document.getElementById("score").innerHTML=score;
+			document.getElementById("moves").innerHTML = moves;
+			pairs = pairs + 1;
+			check_win(pairs);
+			clicked_cards.pop();
+			clicked_cards.pop();
+		}else{
+			for (var j = 0; j<2; j++){
+				var $unmatched_card = clicked_cards[j];
+				$unmatched_card.addClass("wrong");
+				$unmatched_card.removeClass("open show");
+			}
+			clicked_cards = [];
+			score = score - 1;
+			document.getElementById("score").innerHTML=score;
 		}
-		clicked_cards = [];
-		score = score + 5;
-		document.getElementById("score").innerHTML=score;
-		document.getElementById("moves").innerHTML = moves;
-		pairs = pairs + 1;
-		check_win(pairs);
-		clicked_cards.pop();
-		clicked_cards.pop();
-	}else{
-		for (var j = 0; j<2; j++){
-			var $unmatched_card = clicked_cards[j];
-			$unmatched_card.addClass("wrong");
-			$unmatched_card.removeClass("open show");
-		}
-		clicked_cards = [];
-		score = score - 1;
-		document.getElementById("score").innerHTML=score;
-		
-		
 	}
-	
-}
 
 
 function check_win(pairs){
 	if (pairs === 8){
 		console.log("win");
-		window.alert("You have won the game with" +moves+" moves in "+minutes+" minutes and"+seconds+" seconds. Press restart symbol to play again.");
+		window.alert("You have won the game with" +moves+" moves in "+parseInt(document.getElementById('minutes').innerHTML)+" minutes and "+document.getElementById('seconds').innerHTML+" seconds. Press restart symbol to play again.");
 	}
 	clearInterval(timer);
+	modalmessage();
 }
 
 function star_rating(moves){
@@ -137,6 +135,24 @@ function star_rating(moves){
 		$node_one.removeClass('fa-star').addClass('fa-star-o');
 	}		
 }
+
+//http://jqueryui.com/dialog/#modal-message
+//modal initialization
+modalmessage() = $(function(){
+	$("#dialog-message").dialog({
+		modal: true,
+		buttons: {
+			Ok: function(){
+				$(this).dialog("close");
+			}
+		}
+		$(".message").append("You have won the game with '+moves+' moves in '+parseInt(document.getElementById('minutes').innerHTML)+' minutes and '+document.getElementById('seconds').innerHTML+' seconds. Press restart symbol to play again.");
+	});
+});
+//getting modal option after initialization
+var modal = $("#dialog-message").dialog("option", "modal");
+//setting modal option after initialization
+$("#dialog-message").dialog("option", "modal", true);
 function reset_game(){
 	
 	pairs = 0;
@@ -156,7 +172,7 @@ function pad (val){
 	return val > 9 ? val : "0" + val;
 }
 var timer = setInterval (function(){
-	var seconds = document.getElementById("seconds").innerHTML = pad(++sec%60);
-	var minutes = document.getElementById("minutes").innerHTML = pad(parseInt(sec/60, 10));
+	document.getElementById("seconds").innerHTML = pad(++sec%60);
+	document.getElementById("minutes").innerHTML = pad(parseInt(sec/60, 10));
 }, 1000);
 	
