@@ -60,9 +60,11 @@ $('.card').click(function (e) {
 	//let k=e.target.id; 
 	//console.log(e.target.innerHTML);
 	moves = moves + 1; 
+	star_rating(moves);
 	document.getElementById("moves").innerHTML = moves;
 	//clicked_card_id = e.target.innerHTML; 
 	store_in_array($clickedCard);
+	store_card_id($clickedCard);
 });
 
 
@@ -138,9 +140,9 @@ function check_win(pairs){
 }
 
 function star_rating(moves){
-	var $node_one = $('<li id ="one"><i class = "fa fa-star"></i></li>');
-	var $node_two = $('<li id ="two"><i class = "fa fa-star"></i></li>');
-	var $node_three = $('<li id ="three"><i class = "fa fa-star"></i></li>');
+	var $node_one = $('#one');
+	var $node_two = $('#two');
+	var $node_three = $('#three');
 	if(moves>16 && moves<22){
 		$node_one.removeClass('fa-star').addClass('fa-star-o');
 		$node_two.removeClass('fa-star').addClass('fa-star-o');
