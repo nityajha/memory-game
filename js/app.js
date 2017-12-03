@@ -84,7 +84,7 @@ function store_in_array($clickedCard){
 
 function store_card_id($clickedCard){
 	for(var i = 0; i<2; i++){
-		const cardid = clicked_cards[i].children().attr("id");
+		var cardid = clicked_cards[i].children().attr("id");
 		clicked_card_id.push(cardid);
 	}
 	//https://stackoverflow.com/questions/18867599/jquery-inarray-how-to-use-it-right
