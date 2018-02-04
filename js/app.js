@@ -6,9 +6,10 @@ var cards = ["fa-diamond", "fa-diamond", "fa-paper-plane", "fa-paper-plane", "fa
 var clicked_cards = [];
 var counter = 0;
 var moves = 0;
-var clicked_card_id = [];
+var clicked_card_id = 0;
 var score = 0;
 var pairs = 0;
+var start = false
  
 /*
  * Display the cards on the page
@@ -55,16 +56,15 @@ makeDeck();
 
 
 $('.card').click(function (e) {
+	start = true
 	const $clickedCard = $(this);
 	$clickedCard.toggleClass('open show');
 	//let k=e.target.id; 
 	//console.log(e.target.innerHTML);
 	moves = moves + 1; 
-	star_rating(moves);
 	document.getElementById("moves").innerHTML = moves;
 	//clicked_card_id = e.target.innerHTML; 
 	store_in_array($clickedCard);
-	store_card_id($clickedCard);
 });
 
 
@@ -75,24 +75,10 @@ function store_in_array($clickedCard){
 	clicked_cards.push($clickedCard);
 
 	if(clicked_cards.length ===  2){
-		setTimeout(function(){check();},1000);
 		
+		check();
 		console.log("it is going to check");
 		
-	}
-}
-
-function store_card_id($clickedCard){
-	for(var i = 0; i<2; i++){
-		let cardid = clicked_cards[i].children().attr("id");
-		clicked_card_id.push(cardid);
-	}
-	//https://stackoverflow.com/questions/18867599/jquery-inarray-how-to-use-it-right
-	if(jQuery.inArray(cardid, clicked_card_id) !== -1){	
-		//disableclick
-		$('.card').click(function (e) {
-			$('.card').off("click");
-		});
 	}
 }
 
@@ -101,48 +87,45 @@ function check(){
 	const secondCard = clicked_cards[1].children().attr("class");
 
 	console.log(firstCard, secondCard, firstCard === secondCard);
-
-	if (firstCard === secondCard){
-		for(var j=0; j<2; j++){
-			var $matched_card = clicked_cards[j];
-			$matched_card.addClass("match");
-		}
-		clicked_cards = [];
-		score = score + 5;
-		document.getElementById("score").innerHTML=score;
-		document.getElementById("moves").innerHTML = moves;
-		pairs = pairs + 1;
-		check_win(pairs);
-		clicked_cards.pop();
-		clicked_cards.pop();
-	}else{
-		for (var j = 0; j<2; j++){
-			var $unmatched_card = clicked_cards[j];
 			
-			$unmatched_card.removeClass("open show");
+		if (firstCard === secondCard){
+			for(var j=0; j<2; j++){
+				var $matched_card = clicked_cards[j];
+				$matched_card.addClass("match");
+			}
+			clicked_cards = [];
+			score = score + 5;
+			document.getElementById("score").innerHTML=score;
+			document.getElementById("moves").innerHTML = moves;
+			pairs = pairs + 1;
+			check_win(pairs);
+			clicked_cards.pop();
+			clicked_cards.pop();
+		}else{
+			for (var j = 0; j<2; j++){
+				var $unmatched_card = clicked_cards[j];
+				$unmatched_card.addClass("wrong");
+				$unmatched_card.removeClass("open show");
+			}
+			clicked_cards = [];
+			score = score - 1;
+			document.getElementById("score").innerHTML=score;
 		}
-		clicked_cards = [];
-		score = score - 1;
-		document.getElementById("score").innerHTML=score;
-		
-		
 	}
-	
-}
 
 
 function check_win(pairs){
 	if (pairs === 8){
 		console.log("win");
-		window.alert("You have won the game with" +moves+" moves in "+minutes+" minutes and"+seconds+" seconds. Press restart symbol to play again.");
+		window.alert("You have won the game with" +moves+" moves in "+parseInt(document.getElementById('minutes').innerHTML)+" minutes and "+document.getElementById('seconds').innerHTML+" seconds. Press restart symbol to play again.");
 	}
 	clearInterval(timer);
 }
 
 function star_rating(moves){
-	var $node_one = $('#one');
-	var $node_two = $('#two');
-	var $node_three = $('#three');
+	var $node_one = $('<li id ="one"><i class = "fa fa-star"></i></li>');
+	var $node_two = $('<li id ="two"><i class = "fa fa-star"></i></li>');
+	var $node_three = $('<li id ="three"><i class = "fa fa-star"></i></li>');
 	if(moves>16 && moves<22){
 		$node_one.removeClass('fa-star').addClass('fa-star-o');
 		$node_two.removeClass('fa-star').addClass('fa-star-o');
@@ -173,6 +156,12 @@ function pad (val){
 	return val > 9 ? val : "0" + val;
 }
 var timer = setInterval (function(){
-	var seconds = document.getElementById("seconds").innerHTML = pad(++sec%60);
-	var minutes = document.getElementById("minutes").innerHTML = pad(parseInt(sec/60, 10));
+	if (start === true){
+		document.getElementById("seconds").innerHTML = pad(++sec%60);
+		document.getElementById("minutes").innerHTML = pad(parseInt(sec/60, 10));
+		}
+	else{
+		start = false
+	}
 }, 1000);
+	
